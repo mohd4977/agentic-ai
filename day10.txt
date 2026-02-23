@@ -1,0 +1,216 @@
+Excellent. You’ve now built:
+
+Reliable prompts
+
+Structured outputs
+
+Error handling
+
+Guardrails
+
+You’re officially moving from “AI integration engineer” to “production AI architect.”
+
+Now we cover something companies care about even more than guardrails:
+
+💰 Cost Control & Context Optimization
+
+Day 10 — Cost Control & Context Optimization
+Goal of Today
+
+Learn how to:
+
+Reduce token usage
+
+Control API costs
+
+Optimize context windows
+
+Make AI systems scalable
+
+By the end of today, you’ll know how to answer:
+
+“How did you manage AI costs in production?”
+
+Why This Matters
+
+LLMs are expensive at scale.
+
+If:
+
+1 request = 2,000 tokens
+
+100,000 users/day
+
+You’re using GPT-4-level models
+
+You can burn thousands of dollars monthly.
+
+Senior engineers optimize this.
+
+Step 1 — Understand Where Tokens Come From
+
+Tokens are used by:
+
+System prompt
+
+Conversation history (memory)
+
+User message
+
+Tool outputs
+
+Model response
+
+Biggest hidden cost:
+
+Memory + verbose prompts
+
+Step 2 — Reduce Prompt Size
+
+Instead of:
+
+You are a highly intelligent and extremely professional financial analysis assistant...
+
+Use:
+
+You are a financial analyst.
+Only use provided data.
+Return structured output.
+
+Concise = cheaper + clearer.
+
+Step 3 — Control Memory Growth
+
+Earlier, we used ConversationBufferMemory.
+
+Problem:
+
+It keeps EVERYTHING.
+
+Tokens increase each turn.
+
+Better option:
+
+Use Window Memory (keep last N messages)
+
+Example:
+
+from langchain.memory import ConversationBufferWindowMemory
+
+memory = ConversationBufferWindowMemory(
+    k=3,  # keep last 3 exchanges only
+    return_messages=True
+)
+
+Now:
+
+Old context drops off
+
+Token usage stays stable
+
+Step 4 — Choose the Right Model
+
+You’re using:
+
+gpt-4o-mini
+
+Good choice for:
+
+Automation
+
+Structured outputs
+
+Most backend tasks
+
+Don’t use high-cost models unless:
+
+Complex reasoning needed
+
+High-stakes decisions
+
+Interview answer:
+
+We defaulted to lightweight models and only escalated to larger models when complexity required it.
+
+Step 5 — Log Token Usage
+
+You can inspect usage:
+
+response = llm.invoke("Hello")
+print(response.response_metadata)
+
+This shows:
+
+Prompt tokens
+
+Completion tokens
+
+Total tokens
+
+In production, you log this.
+
+Step 6 — Smart Pattern: Two-Stage Agent
+
+Instead of:
+
+User → Large model
+
+Use:
+
+Stage 1 (cheap model):
+
+Classify task
+
+Decide complexity
+
+Stage 2:
+
+Only escalate if needed
+
+This reduces cost significantly.
+
+Example: Simple Cost-Optimized Pattern
+def route_request(user_input: str):
+    if len(user_input) < 50:
+        return small_model.invoke(user_input)
+    else:
+        return larger_model.invoke(user_input)
+
+This is a real production pattern.
+
+Interview Question You Will Get
+Q: How did you control LLM costs?
+
+Strong answer:
+
+I optimized system prompts to be concise, used windowed memory instead of full history, logged token usage for monitoring, and implemented model routing strategies where lightweight models handled simple tasks while larger models were used only when necessary.
+
+That answer signals:
+
+Architectural thinking
+
+Cost awareness
+
+Scalability mindset
+
+Your Skill Level After Day 10
+
+You now understand:
+
+Agents
+
+Tools
+
+Memory
+
+Reliability
+
+Guardrails
+
+Structured outputs
+
+Error handling
+
+Cost control
+
+You’re now operating at senior backend AI engineer level.
