@@ -1,0 +1,7 @@
+langchain
+langchain_openai
+langchain_chroma
+langchain_text_splitters
+langgraph
+requests
+dotenv
